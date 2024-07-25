@@ -35,7 +35,10 @@ func main() {
 			log.Fatal(err)
 		}
 
-		fmt.Println(realServerAddress(&conn))
+		r, _ := realServerAddress(&conn)
+		fmt.Println(r)
+
+		conn.Close()
 
 		//	go func(c net.Conn) {
 		//		br := bufio.NewReader(c)

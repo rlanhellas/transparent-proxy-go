@@ -1,0 +1,14 @@
+services:
+  proxy:
+    network_mode: host
+    build: ./
+    container_name: proxy
+    ports:
+      - 8080:8080
+  bastion:
+    network_mode: host
+    build:
+      dockerfile: ubuntu.Dockerfile
+      context: ./
+    container_name: bastion
+    privileged: true
