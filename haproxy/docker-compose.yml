@@ -1,0 +1,33 @@
+services:
+  haproxy:
+    image: haproxy:3.0.3-alpine
+    container_name: haproxy
+    ports:
+      - 8080:10000
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+  serverA: 
+    container_name: serverA
+    image: clue/json-server
+    command: 
+      - db.json
+    volumes:
+      - ./dba.json:/tmp/db.json
+  serverB: 
+    container_name: serverB
+    image: clue/json-server
+    command: 
+      - db.json
+    volumes:
+      - ./dbb.json:/tmp/db.json
+  dns:
+    container_name: dns
+    image: coredns/coredns
+    ports:
+      - 1053:1053/udp
+    command: 
+      - -conf
+      - /tmp/Corefile
+    volumes:
+      - ./Corefile:/tmp/Corefile
+      - ./db.internal:/tmp/db.internal
